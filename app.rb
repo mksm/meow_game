@@ -11,7 +11,7 @@ INTERVAL=ENV["INTERVAL"]
 def too_soon?
   last_time = settings.cache.get("last_meow") 
   if last_time
-    return last_time + INTERVAL >= Time.now
+    return last_time + INTERVAL.to_i >= Time.now
   else
     return false
   end
