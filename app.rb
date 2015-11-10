@@ -9,9 +9,12 @@ set :cache, Dalli::Client.new(ENV["MEMCACHIER_SERVERS"],
 INTERVAL=ENV["INTERVAL"]
 
 def too_soon?
-  if 
-  interval = Time.now - (settings.cache.get("last_meow") || Time.now-1)
-  return interval <= INTERVAL.to_i
+  last_time = settings.cache.get("last_meow") 
+  if last_time
+    return last_time + INTERVAL >= Time.now
+  else
+    return false
+  end
 end
 
 def update_points(user_name)
