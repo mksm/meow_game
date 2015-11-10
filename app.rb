@@ -3,7 +3,7 @@ require 'json'
 require 'dalli'
 set :cache, Dalli::Client.new(ENV["MEMCACHIER_SERVERS"],
                   {:username => ENV["MEMCACHIER_USERNAME"],
-                   :password => ENV["MEMCACHIER_PASSWORD"]}
+                   :password => ENV["MEMCACHIER_PASSWORD"]})
 
 # define with: heroku config:set INTERVAL=<seconds>
 INTERVAL=ENV["INTERVAL"]
