@@ -9,7 +9,7 @@ set :cache, Dalli::Client.new(ENV["MEMCACHIER_SERVERS"],
 INTERVAL=ENV["INTERVAL"]
 
 def too_soon?
-  interval = Time.now - settings.cache.get("last_meow")
+  interval = Time.now - (settings.cache.get("last_meow") || 0)
   return interval <= INTERVAL
 end
 
