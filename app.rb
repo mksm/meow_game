@@ -35,3 +35,9 @@ post '/meow' do
     {text: "Congratz, #{current_winner}! You are the current meower. You have #{current_points}"}.to_json
   end
 end
+
+post '/meow_command' do
+  if params["text"] == 'ranking' 
+    return {text: "In the future there will be a ranking listed."}
+  end
+end
