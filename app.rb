@@ -38,6 +38,6 @@ end
 
 post '/meow_command' do
   if params["text"] == 'ranking' 
-    return {text: "In the future there will be a ranking listed."}
+    return {text: "In the future there will be a ranking listed."}.to_json
   end
 end
