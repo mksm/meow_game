@@ -6,7 +6,7 @@ set :cache, Dalli::Client.new
 # define with: heroku config:set INTERVAL=<seconds>
 INTERVAL=ENV["INTERVAL"]
 
-def too_son?
+def too_soon?
   interval = Time.now - cache.get("last_meow")
   return interval <= INTERVAL
 end
