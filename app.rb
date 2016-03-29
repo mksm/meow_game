@@ -62,7 +62,7 @@ post '/meow_command' do
     ranking_message = {
       response_type: "in_channel", 
       text: "Ranking atualizado dos meow'ers:",
-      attachments: {
+      attachments: [
         fields: [
           {
             title: "Nick",
@@ -73,7 +73,7 @@ post '/meow_command' do
             short: true
             }            
           ]
-      }
+      ]
     }
     user_list.sort_by {|k,v| v[:points]}.each do |x|
       ranking_message[:attachments][:fields] << { value: "#{x[0]}", short: true }
