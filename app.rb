@@ -29,14 +29,14 @@ def update_points(user_name, points)
     if user_list[user_name]
       user_list[user_name][:points] += 1 
     else
-      user_list[username] = { points: points, last_meow: Time.now }    
+      user_list[user_name] = { points: points, last_meow: Time.now }    
     end
   else
     user_list = {}
-    user_list[username] = { points: points, last_meow: Time.now }    
+    user_list[user_name] = { points: points, last_meow: Time.now }    
   end
   settings.cache.set('user_list', user_list)
-  user_list[username][:points]
+  user_list[user_name][:points]
 end
 
 post '/meow' do
