@@ -25,7 +25,7 @@ def too_soon?
 end
 
 def update_points(user_name, points)
-  if user_list = settings.cache.get(user_list) # would be false only the first time, when there is no memcached object
+  if user_list = settings.cache.get('user_list') # would be false only the first time, when there is no memcached object
     if user_list[user_name]
       user_list[user_name][:points] += 1 
     else
