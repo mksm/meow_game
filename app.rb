@@ -57,6 +57,8 @@ end
 
 post '/meow_command' do
   if params["text"] == 'ranking' 
-    return {text: "In the future there will be a ranking listed."}.to_json
+    user_list = settings.cache.get('user_list')
+    ranking = user_list.sort_by {|k,v| v[:points]}.map { |x| "#{x[0]} - #{x[1][:points]}" }.join("\n")
+    return {text: "#{ranking}"}.to_json
   end
 end
