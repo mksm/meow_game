@@ -78,8 +78,8 @@ post '/meow_command' do
         ]
       }
     user_list.sort_by {|k,v| v[:points]}.each do |x|
-      ranking_message[:attachments][:fields] << { value: "#{x[0]}", short: true }
-      ranking_message[:attachments][:fields] << { value: "#{x[1][:points]}", short: true }      
+      ranking_message[:attachments][0][:fields] << { value: "#{x[0]}", short: true }
+      ranking_message[:attachments][0][:fields] << { value: "#{x[1][:points]}", short: true }      
      end
     return ranking_message.to_json
   end
