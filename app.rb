@@ -7,6 +7,12 @@ set :cache, Dalli::Client.new(ENV["MEMCACHIER_SERVERS"], {
   password: ENV["MEMCACHIER_PASSWORD"]
 })
 
+# User list hash
+# {
+#   username_1: {points: float, last_meow: Time},
+#   username_2: {points: float, last_meow: Time}
+# }
+
 # define with: heroku config:set INTERVAL=<seconds>
 INTERVAL = ENV.fetch('INTERVAL', 6).to_i
 
@@ -19,9 +25,18 @@ def too_soon?
 end
 
 def update_points(user_name, points)
-  actual = settings.cache.get(user_name) || 0
-  settings.cache.set(user_name, actual + points)
-  actual + points
+  if user_list = settings.cache.get(user_list) # would be false only the first time, when there is no memcached object
+    if user_list[user_name]
+      user_list[user_name][:points] += 1 
+    else
+      user_list[username] = { points: points, last_meow: Time.now }    
+    end
+  else
+    user_list = {}
+    user_list[username] = { points: points, last_meow: Time.now }    
+  end
+  settings.cache.set('user_list', user_list)
+  user_list[username][:points]
 end
 
 post '/meow' do
