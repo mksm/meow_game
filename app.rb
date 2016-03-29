@@ -59,7 +59,26 @@ post '/meow_command' do
   content_type :json  
   if params["text"] == 'ranking' 
     user_list = settings.cache.get('user_list')
-    ranking = user_list.sort_by {|k,v| v[:points]}.map { |x| "#{x[0]} - #{x[1][:points]}" }.join("\n")
-    return {response_type: "in_channel", text: "#{ranking}"}.to_json
+    ranking_message = {
+      response_type: "in_channel", 
+      text: "Ranking atualizado dos meow'ers:",
+      attachments: {
+        fields: [
+          {
+            title: "Nick",
+            short: true
+            },
+            {
+            title: "Pontos",
+            short: true
+            }            
+          ]
+      }
+    }
+    user_list.sort_by {|k,v| v[:points]}.each do |x|
+      ranking_message[:attachments][:fields] << { value: "#{x[0]}", short: true }
+      ranking_message[:attachments][:fields] << { value: "#{x[1][:points]}", short: true }      
+     end
+    return ranking_message.to_json
   end
 end
