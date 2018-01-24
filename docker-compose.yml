@@ -1,0 +1,10 @@
+app:
+  build: .
+  volumes:
+    - .:/usr/src/app
+  ports:
+    - "80:80"
+  external_links:
+    - memcached-development
+  environment:
+    MEMCACHIER_SERVERS: memcached-development
